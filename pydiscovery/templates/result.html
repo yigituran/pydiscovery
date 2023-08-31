@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Network Discovery Result</title>
+</head>
+<body>
+    <h1>Network Discovery Result</h1>
+    
+    {% if method_input == "ping" %}
+        <h3>Active hosts found (ICMP Ping Scan):</h3>
+        <ul>
+            {% for host in active_hosts %}
+                <li>{{ host }}</li>
+            {% endfor %}
+        </ul>
+    {% elif method_input == "port" %}
+        <h3>Open ports found (Port Scan):</h3>
+        <ul>
+            {% for host, ports in active_hosts.items() %}
+                <li>{{ host }}: {{ ports }}</li>
+            {% endfor %}
+        </ul>
+    {% elif method_input == "arp" %}
+        <h3>Active hosts found (ARP Scan):</h3>
+        <ul>
+            {% for host, mac in active_hosts.items() %}
+                <li>{{ host }} (MAC: {{ mac }})</li>
+            {% endfor %}
+        </ul>
+    {% elif method_input == "snmp" %}
+        <h3>SNMP Scan Results:</h3>
+        <ul>
+            {% for result in active_hosts %}
+                <li>{{ result }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <a href="{{ url_for('dashboard') }}">Back to Discovery</a>
+</body>
+</html>

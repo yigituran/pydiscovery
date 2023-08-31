@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Discovery Results{% endblock %}
+
+{% block content %}
+<div class="results-section">
+    <h2>Discovery Results</h2>
+
+    <select id="filter-method" onchange="filterResults()">
+        <option value="">Filter by discovery method:</option>
+        <option value="all">All</option>
+        <option value="ping">Ping</option>
+        <option value="port">Port</option>
+        <option value="arp">ARP</option>
+        <option value="snmp">SNMP</option>
+    </select>
+
+    <form method="post" action="{{ url_for('delete_results') }}" id="deleteForm">
+        <table id="resultsTable" class="display">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Method</th>
+                    <th>IP Range</th>
+                    <th>Result</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in all_results %}
+                    {% if result.user_id == current_user.id %}
+                        <tr>
+                            <td><input type="checkbox" name="selected_results" value="{{ result.id }}"></td>
+                            <td>{{ result.method }}</td>
+                            <td>{{ result.ip_range }}</td>
+                            <td><pre>{{ result.result }}</pre></td>
+                            <td>{{ result.timestamp }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-danger mt-2" id="deleteButton">Delete Selected</button>
+        <div id="deleteConfirmation" class="mt-2" style="display: none;">
+            Selected results will be deleted. Do you want to proceed?
+            <button type="button" class="btn btn-success" id="confirmDelete">Yes</button>
+            <button type="button" class="btn btn-secondary" id="cancelDelete">No</button>
+        </div>
+    </form>
+
+    <div class="btn-group mt-2">
+        <a href="{{ url_for('download_results_csv') }}" class="btn btn-primary">Download Results as CSV</a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Discovery</a>
+    </div>
+
+    <script>
+        function filterResults() {
+            var selectedMethod = document.getElementById("filter-method").value;
+            var newUrl = "{{ url_for('results') }}?method=" + selectedMethod;
+            window.location.href = newUrl;
+        }
+
+        const deleteButton = document.getElementById('deleteButton');
+        const deleteConfirmation = document.getElementById('deleteConfirmation');
+        const confirmDeleteButton = document.getElementById('confirmDelete');
+        const cancelDeleteButton = document.getElementById('cancelDelete');
+
+        deleteButton.addEventListener('click', () => {
+            deleteConfirmation.style.display = 'block';
+        });
+
+        confirmDeleteButton.addEventListener('click', () => {
+            document.getElementById('deleteForm').submit();
+        });
+
+        cancelDeleteButton.addEventListener('click', () => {
+            deleteConfirmation.style.display = 'none';
+        });
+    </script>
+</div>
+{% endblock %}

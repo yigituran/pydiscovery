@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Network Discovery{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="topnav">
+        <div class="datetime">{{ current_datetime }}</div>
+        <div class="title">Python Network Discovery</div>
+        <div class="user-links">
+            <a class="username btn btn-primary" href="{{ url_for('user') }}">
+                <i class="fas fa-user"></i> {{ username }}
+            </a>
+            <a class="logout btn btn-primary" href="{{ url_for('logout') }}">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div> 
+    </div>
+        
+    <div class="sidenav">
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+        <a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-bar"></i> Dashboard</a>
+        <a href="{{ url_for('results') }}"><i class="fas fa-list-ul"></i> Results</a>
+        <a href="{{ url_for('help') }}"><i class="fas fa-question-circle"></i> Support</a>
+    </div>
+    <div class="main">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2023 All rights reserved.</p>
+    </footer>
+</body>
+</html>

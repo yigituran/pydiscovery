@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+    <h1>User Profile</h1>
+    <p>Welcome, {{ username }}!</p>
+
+    <img src="{{ url_for('static', filename='user_pictures/' + user.account_picture) }}" alt="Account Picture" width="200" height="200">
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Change Picture">
+    </form>
+
+    <h2>Change Email Address</h2>
+    {% if email_change_form %}
+        <form method="POST">
+            {{ email_change_form.hidden_tag() }}
+            <div class="form-group">
+                {{ email_change_form.email.label() }}
+                {{ email_change_form.email(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Change Email</button>
+        </form>
+        {% for message in get_flashed_messages(with_categories=true) %}
+            {% if message[1] == "error" %}
+                <div class="alert alert-danger">
+                    {{ message[0] }}
+                </div>
+            {% elif message[1] == "success" %}
+                <div class="alert alert-success">
+                    {{ message[0] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <h2>Change Password</h2>
+    {% if password_change_form %}
+        <form method="POST">
+            {{ password_change_form.hidden_tag() }}
+            <div class="form-group">
+                {{ password_change_form.current_password.label() }}
+                {{ password_change_form.current_password(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ password_change_form.new_password.label() }}
+                {{ password_change_form.new_password(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ password_change_form.confirm_new_password.label() }}
+                {{ password_change_form.confirm_new_password(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Change Password</button>
+        </form>
+        {% for message in get_flashed_messages(with_categories=true) %}
+            {% if message[1] == "error" %}
+                <div class="alert alert-danger">
+                    {{ message[0] }}
+                </div>
+            {% elif message[1] == "success" %}
+                <div class="alert alert-success">
+                    {{ message[0] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+{% endblock %}

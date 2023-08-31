@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+    <div class="last-discovery-section">
+        <h2>Network Discovery Tool</h2>
+        <h1>Welcome, {{ username }}!</h1>
+        <p>This is the home page of the Python Network Discovery application. You can navigate to other pages using the side navigation bar.</p>
+        <h3>Last Discovery Job</h3>
+        <div class="last-discovery-info">
+            {% if last_discovery %}
+                <p><strong>IP Address or Range:</strong> {{ last_discovery.ip_range }}</p>
+                <p><strong>Method:</strong> {{ last_discovery.method }}</p>
+                <p><strong>Result:</strong> {{ last_discovery.result }}</p>
+            {% else %}
+                <p>No discovery jobs found.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

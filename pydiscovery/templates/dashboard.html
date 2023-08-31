@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <div class="dashboard-section">
+        <h2>Network Discovery Tool</h2>
+        <h1>Welcome to your dashboard, {{ username }}!</h1>
+
+        <!-- Display flashed messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <h2>Here you can run a discovery task</h2>
+        <form method="post" action="{{ url_for('dashboard') }}">
+            <label for="ip_input">Enter an IP address or IP range (e.g., 192.168.0.0/24):</label>
+            <input type="text" id="ip_input" name="ip_input" required><br><br>
+            
+            <label for="method_input">Select Scan Method:</label>
+            <input type="radio" id="ping" name="method_input" value="ping" checked>
+            <label for="ping">ICMP Ping Scan</label>
+            
+            <input type="radio" id="port" name="method_input" value="port">
+            <label for="port">Port Scan</label>
+            
+            <input type="radio" id="arp" name="method_input" value="arp">
+            <label for="arp">ARP Scan</label><br><br>
+
+            <input type="radio" id="snmp" name="method_input" value="snmp">
+            <label for="snmp">SNMP Scan</label><br><br>
+            
+            <!-- If you choose "Port Scan," show a field for entering ports -->
+            <div id="ports_input" style="display: none;">
+                <label for="ports">Enter Ports (comma-separated):</label>
+                <input type="text" id="ports" name="ports_input">
+            </div>
+            <input type="submit" value="Discover">
+        </form>
+
+        <form method="post" action="{{ url_for('dashboard') }}">
+            <label for="scheduled_time">Schedule Discovery:</label>
+            <input type="datetime-local" id="scheduled_time" name="scheduled_time" required>
+            <input type="hidden" id="ip_input_hidden" name="ip_input" value="{{ request.form.ip_input }}">
+            <input type="hidden" id="method_input_hidden" name="method_input" value="{{ request.form.method_input }}">
+            <input type="hidden" id="ports_input_hidden" name="ports_input" value="{{ request.form.ports_input }}">
+            <input type="submit" value="Schedule">
+        </form>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            // Show a popup message when the form is submitted
+            $("form").submit(function () {
+                var submitButtonText = $(this).find(":submit").val();
+                if (submitButtonText === "Discover") {
+                    alert("Your discovery task is in progress.");
+                } else if (submitButtonText === "Schedule") {
+                    alert("Your task scheduling is in progress.");
+                }
+            });
+
+            // Show the ports input field if "Port Scan" is selected
+            $('input[name="method_input"]').change(function () {
+                if ($(this).val() === "port") {
+                    $('#ports_input').show();
+                } else {
+                    $('#ports_input').hide();
+                }
+            });
+        </script>
+    </div>
+{% endblock %}

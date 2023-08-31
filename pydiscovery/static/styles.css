@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.topnav {
+    background-color: #3833d1;
+    overflow: hidden;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.user-links {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.user-links a i {
+    margin-right: 5px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 15px 15px 15px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.sidenav a i {
+    margin-right: 10px;
+}
+
+.sidenav a:hover {
+    background-color: #444;
+}
+
+.main {
+    margin-left: 260px;
+    padding: 20px;
+}
+
+.main h2 {
+    color: #333;
+}
+
+.main p {
+    color: #666;
+}
+
+
+/* Your existing styles */
+
+.last-discovery-section {
+    border: 1px solid #e0e0e0; /* Gray border close to white */
+    background-color: #f9f9f9; /* Light gray background */
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.last-discovery-info {
+    margin-top: 10px;
+}
+
+
+/* Your existing styles */
+
+.dashboard-section {
+    border: 1px solid #e0e0e0; /* Gray border close to white */
+    background-color: #f9f9f9; /* Light gray background */
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Your existing styles */
+
+.results-section {
+    border: 1px solid #e0e0e0; /* Gray border close to white */
+    background-color: #f9f9f9; /* Light gray background */
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Your existing styles */
+/* Your existing styles */
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 0px;
+    background-color: #3833d1;
+    color: white;
+}
